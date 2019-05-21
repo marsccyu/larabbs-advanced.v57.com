@@ -32,12 +32,12 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     public function topics()
     {
-//        return $this->hasMany(Topic::class);
+        return $this->hasMany(Topic::class);
     }
 
     public function replies()
     {
-//        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class);
     }
 
     public function notify($instance)
