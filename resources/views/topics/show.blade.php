@@ -1,10 +1,7 @@
 @extends('layouts.app')
-
 @section('title', $topic->title)
 @section('description', $topic->excerpt)
-
 @section('content')
-
     <div class="row">
 
         <div class="col-lg-3 col-md-3 hidden-sm hidden-xs author-info">
@@ -26,7 +23,7 @@
         </div>
 
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 topic-content">
-            <div class="card ">
+            <div class="card">
                 <div class="card-body">
                     <h1 class="text-center mt-3 mb-3">
                         {{ $topic->title }}
@@ -46,7 +43,7 @@
                     @can('update', $topic)
                         <div class="operate">
                             <hr>
-                            <a href="{{ $topic->link() }}" class="btn btn-outline-secondary btn-sm" role="button">
+                            <a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
                                 <i class="far fa-edit"></i> 编辑
                             </a>
                             <form action="{{ route('topics.destroy', $topic->id) }}" method="post"
@@ -63,6 +60,15 @@
 
                 </div>
             </div>
+
+            {{-- 用户回复列表 --}}
+            <div class="card topic-reply mt-4">
+                <div class="card-body">
+                    @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
+                    @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
+                </div>
+            </div>
+
         </div>
     </div>
-@stop
+@endsection
