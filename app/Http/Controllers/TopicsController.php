@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Link;
 use App\Models\Topic;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Handlers\ImageUploadHandler;
 
 class TopicsController extends Controller
@@ -17,11 +19,15 @@ class TopicsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index(Request $request, Topic $topic)
-	{
+    public function index(Request $request, Topic $topic, User $user, Link $link)
+    {
         $topics = $topic->withOrder($request->order)->paginate(20);
-        return view('topics.index', compact('topics'));
-	}
+//        $active_users = $user->getActiveUsers();
+        $active_users = [];
+//        $links = $link->getAllCached();
+        $links = [];
+        return view('topics.index', compact('topics', 'active_users', 'links'));
+    }
 
     public function show(Request $request, Topic $topic)
     {
@@ -33,11 +39,11 @@ class TopicsController extends Controller
         return view('topics.show', compact('topic'));
     }
 
-	public function create(Topic $topic)
-	{
+    public function create(Topic $topic)
+    {
         $categories = Category::all();
         return view('topics.create_and_edit', compact('topic', 'categories'));
-	}
+    }
 
     public function store(TopicRequest $request, Topic $topic)
     {
@@ -45,7 +51,7 @@ class TopicsController extends Controller
         $topic->user_id = Auth::id();
         $topic->save();
 
-        return redirect()->route($topic->link(), $topic->id)->with('success', '帖子创建成功！');
+        return redirect()->to($topic->link())->with('success', '文章發布成功！');
     }
 
     public function edit(Topic $topic)
@@ -55,20 +61,20 @@ class TopicsController extends Controller
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
-    public function update(TopicRequest $request, Topic $topic)
-    {
-        $this->authorize('update', $topic);
-        $topic->update($request->all());
+	public function update(TopicRequest $request, Topic $topic)
+	{
+		$this->authorize('update', $topic);
+		$topic->update($request->all());
 
-        return redirect()->route($topic->link(), $topic->id)->with('success', '更新成功！');
-    }
+		return redirect()->route('topics.show', $topic->id)->with('message', 'Updated successfully.');
+	}
 
     public function destroy(Topic $topic)
     {
         $this->authorize('destroy', $topic);
         $topic->delete();
 
-        return redirect()->route('topics.index')->with('success', '成功删除！');
+        return redirect()->to($topic->link())->with('success', '成功删除！');
     }
 
     public function uploadImage(Request $request, ImageUploadHandler $uploader)
