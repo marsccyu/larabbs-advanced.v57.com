@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Models\Traits;
 
 use App\Models\Topic;
 use App\Models\Reply;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
+use Cache;
+use DB;
 
 trait ActiveUserHelper
 {
@@ -22,11 +21,6 @@ trait ActiveUserHelper
     // 缓存相关配置
     protected $cache_key = 'larabbs_active_users';
     protected $cache_expire_in_minutes = 65;
-
-    public function clearCache()
-    {
-        Cache::forget($this->cache_key);
-    }
 
     public function getActiveUsers()
     {
