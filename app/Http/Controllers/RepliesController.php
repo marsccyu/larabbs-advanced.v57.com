@@ -22,7 +22,7 @@ class RepliesController extends Controller
         $reply->topic_id = $request->input('topic_id');
         $reply->save();
 
-        return redirect()->to($reply->topic->link())->with('success', '評論創建成功！');
+        return redirect()->to($reply->topic->link())->with('success', '評論送出成功！');
     }
 
     public function destroy(Reply $reply)

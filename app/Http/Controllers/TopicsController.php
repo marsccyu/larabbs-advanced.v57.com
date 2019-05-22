@@ -50,7 +50,7 @@ class TopicsController extends Controller
         $topic->user_id = Auth::id();
         $topic->save();
 
-        return redirect()->to($topic->link())->with('success', '文章發布成功！');
+        return redirect()->to($topic->link())->with('success', '文章發布完成！');
     }
 
     public function edit(Topic $topic)
@@ -73,7 +73,7 @@ class TopicsController extends Controller
         $this->authorize('destroy', $topic);
         $topic->delete();
 
-        return redirect()->to($topic->link())->with('success', '成功删除！');
+        return redirect()->to($topic->link())->with('success', '刪除成功！');
     }
 
     public function uploadImage(Request $request, ImageUploadHandler $uploader)

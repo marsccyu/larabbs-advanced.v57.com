@@ -8,7 +8,7 @@
     <div class="media-body">
         <div class="media-heading mt-0 mb-1 text-secondary">
             <a href="{{ route('users.show', $notification->data['user_id']) }}">{{ $notification->data['user_name'] }}</a>
-            评论了
+            回覆了
             <a href="{{ $notification->data['topic_link'] }}">{{ $notification->data['topic_title'] }}</a>
 
             {{-- 回复删除按钮 --}}

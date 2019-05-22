@@ -1,7 +1,7 @@
 <div class="card ">
     <div class="card-body">
         <a href="{{ route('topics.create') }}" class="btn btn-success btn-block" aria-label="Left Align">
-            <i class="fas fa-pencil-alt mr-2"></i> 新建帖子
+            <i class="fas fa-pencil-alt mr-2"></i> 建立話題
         </a>
     </div>
 </div>
@@ -9,7 +9,7 @@
 @if (count($active_users))
     <div class="card mt-4">
         <div class="card-body active-users pt-2">
-            <div class="text-center mt-1 mb-0 text-muted">活跃用户</div>
+            <div class="text-center mt-1 mb-0 text-muted">活躍用戶</div>
             <hr class="mt-2">
             @foreach ($active_users as $active_user)
                 <a class="media mt-2" href="{{ route('users.show', $active_user->id) }}">
@@ -28,7 +28,7 @@
 @if (count($links))
     <div class="card mt-4">
         <div class="card-body pt-2">
-            <div class="text-center mt-1 mb-0 text-muted">资源推荐</div>
+            <div class="text-center mt-1 mb-0 text-muted">資源推薦</div>
             <hr class="mt-2 mb-3">
             @foreach ($links as $link)
                 <a class="media mt-1" href="{{ $link->link }}">

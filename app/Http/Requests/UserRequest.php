@@ -35,12 +35,12 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'avatar.mimes' =>'头像必须是 jpeg, bmp, png, gif 格式的图片',
-            'avatar.dimensions' => '图片的清晰度不够，宽和高需要 208px 以上',
-            'name.unique' => '用户名已被占用，请重新填写',
-            'name.regex' => '用户名只支持英文、数字、横杆和下划线。',
-            'name.between' => '用户名必须介于 3 - 25 个字符之间。',
-            'name.required' => '用户名不能为空。',
+            'avatar.mimes' =>'頭像必須是 jpeg, bmp, png, gif 格式的圖片',
+            'avatar.dimensions' => '圖片宽和高必須為 208px 以上',
+            'name.unique' => '用戶名稱已被使用，請重新填寫',
+            'name.regex' => '用戶名稱只能使用英數及橫槓或下底線',
+            'name.between' => '用戶名稱必須在 3 - 25 字元之間',
+            'name.required' => '用戶名稱不能為空',
         ];
     }
 }
