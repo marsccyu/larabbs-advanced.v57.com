@@ -4,13 +4,13 @@ namespace App\Models\Traits;
 
 use Redis;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 trait LastActivedAtHelper
 {
     // 缓存相关
     protected $hash_prefix = 'larabbs_last_actived_at_';
     protected $field_prefix = 'user_';
-    protected $id;
 
     public function recordLastActivedAt()
     {
@@ -80,6 +80,6 @@ trait LastActivedAtHelper
     public function getHashField()
     {
         // 字段名称，如：user_1
-        return $this->field_prefix . $this->id;
+        return $this->field_prefix . Auth::id();
     }
 }
