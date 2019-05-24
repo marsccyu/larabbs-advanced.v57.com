@@ -5,6 +5,7 @@ namespace App\Models;
 class Reply extends Model
 {
     protected $fillable = ['content'];
+    protected $guarded = [];
 
     public function topic()
     {
