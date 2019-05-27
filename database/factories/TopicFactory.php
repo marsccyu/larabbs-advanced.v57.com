@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(App\Models\Topic::class, function (Faker $faker) {
 
@@ -16,6 +17,7 @@ $factory->define(App\Models\Topic::class, function (Faker $faker) {
         'title' => $sentence,
         'body' => $faker->text(),
         'excerpt' => $sentence,
+        'slug' => Str::random(),
         'created_at' => $created_at,
         'updated_at' => $updated_at,
     ];
