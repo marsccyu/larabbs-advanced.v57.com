@@ -17,7 +17,8 @@ class ReplyTest extends TestCase
         $this->topic = Topic::inRandomOrder()->first();
     }
     /**
-     * $test
+     * reply 的 user 關聯是否為 App\Models\User 的實例
+     * @test
      */
     public function test_reply_owner()
     {

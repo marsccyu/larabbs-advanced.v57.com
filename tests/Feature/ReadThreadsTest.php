@@ -22,38 +22,51 @@ class ReadThreadsTest extends TestCase
         $this->topic = Topic::inRandomOrder()->first();
     }
 
-    /** @test */
+    /**
+     * 是否能顯示 thread 頁面及一則標題
+     * @test
+     */
     public function a_user_can_view_all_threads()
     {
         $this->get('/threads')->assertSee($this->thread->title);
     }
 
-    /** @test */
+    /**
+     * 是否能顯示一則文章及對應標題
+     * @test
+     */
     public function a_user_can_read_a_single_thread()
     {
-        $this->get('/threads/' . $this->thread->id)->assertSee($this->thread->title);
+        $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
-    /** @test */
+    /**
+     * 是否能顯示全部 Topic 及標題
+     * @test
+     */
     public function a_user_can_view_all_topics()
     {
         $this->get('topics')->assertSee($this->topic->title);
     }
 
-    /** @test */
+    /**
+     * 是否能顯示一則 Topic 內容及標題
+     * @test
+     */
     public function a_user_can_read_a_single_topic()
     {
-        $this->get('/topics/' . $this->topic->id)->assertSee($this->topic->title);
+        $this->get($this->topic->link())->assertSee($this->topic->title);
     }
 
     /**
+     * 用 Topic 做測試關聯 reply
+     * 是否能看到一則 Topic 其中的一則 reply
      * @test
-     * 我用 Topic 做測試關聯 reply
      */
     public function a_user_can_read_replies_that_are_associated_with_a_topic()
     {
         // 隨機取得一筆回復
         $reply = $this->topic->replies()->orderByRaw("RAND()")->first();
-        $this->get(route('topics.show', ['topic' => $this->topic->id]))->assertSee($reply->title);
+        $this->get($this->topic->link())->assertSee($reply->title);
     }
 }
