@@ -39,4 +39,10 @@ class TopicTest extends TestCase
     {
         $this->assertInstanceOf('App\Models\User',$this->topic->user);
     }
+
+    /** @test */
+    function a_topci_belongs_to_a_channel()
+    {
+        $this->assertInstanceOf('App\Models\Channel',$this->topic->channel);
+    }
 }

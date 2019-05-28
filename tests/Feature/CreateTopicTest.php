@@ -12,13 +12,19 @@ class CreateTopicTest extends TestCase
 {
     /**
      * 測試未登入情況下訪問建立 Topic 頁面導向登入頁面
+     * 測試未登入情況下建立 Topic 資料導向登入頁面
      * @test
      */
     public function guest_can_view_create_page()
     {
-        $this->withExceptionHandling()
-            ->get(route('topics.create'))
+        $this->withExceptionHandling();
+
+        $this->get(route('topics.create'))
             ->assertRedirect('/login');
+
+        $this->post(route('topics.store'))
+            ->assertRedirect('/login');
+
     }
 
     /**
@@ -32,21 +38,8 @@ class CreateTopicTest extends TestCase
             ->make(['user_id' => $user->id, 'category_id' => 1]);
 
         $result = $this->post(route('topics.store'), $topic->toArray());
-        $this->get($result->getTargetUrl())->assertOk();
-    }
-
-    /**
-     * 測試訪客禁止發表文章
-     * @test
-     */
-    public function guest_can_store_topic()
-    {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $topic = factory(Topic::class)
-            ->make(['category_id' => 1]);
-
-        $result = $this->post(route('topics.store'), $topic->toArray());
-        $this->get($result->getTargetUrl())->assertOk();
+        $this->get($result->getTargetUrl())
+            ->assertSee($topic->title)
+            ->assertOk();
     }
 }
