@@ -11,12 +11,23 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class CreateTopicTest extends TestCase
 {
     /**
+     * 測試未登入情況下訪問建立 Topic 頁面導向登入頁面
+     * @test
+     */
+    public function guest_can_view_create_page()
+    {
+        $this->withExceptionHandling()
+            ->get(route('topics.create'))
+            ->assertRedirect('/login');
+    }
+
+    /**
      * 測試用戶發表文章
      * @test
      */
     public function user_can_create_topic()
     {
-        $this->be($user = User::find(1));
+        $this->signIn($user = factory(User::class)->create());
         $topic = factory(Topic::class)
             ->make(['user_id' => $user->id, 'category_id' => 1]);
 

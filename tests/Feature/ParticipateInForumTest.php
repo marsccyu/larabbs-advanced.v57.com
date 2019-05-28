@@ -31,7 +31,7 @@ class ParticipateInForumTest extends TestCase
      */
     function an_authenticated_user_may_participate_in_forum_threads()
     {
-        $this->be($user = User::find(1)); // 測試的應用程序登入 user id : 1
+        $this->signIn($user = factory(User::class)->create()); // 測試的應用程序登入
 
         // 產生 replies
         $replys = factory(Reply::class)
