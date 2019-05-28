@@ -53,7 +53,6 @@ class ParticipateInForumTest extends TestCase
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
         $replys = factory(Reply::class)
-            ->times(1)
             ->make(['topic_id'=>$this->topic->id]);
 
         $this->post(route('replies.store'), $replys->first()->toArray());

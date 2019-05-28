@@ -19,7 +19,7 @@ class ReadThreadsTest extends TestCase
     {
         parent::setUp();
         $this->thread = Thread::inRandomOrder()->first();
-        $this->topic = Topic::inRandomOrder()->first();
+        $this->topic = Topic::query()->limit(1)->recent()->first();
     }
 
     /**
@@ -61,12 +61,24 @@ class ReadThreadsTest extends TestCase
     /**
      * 用 Topic 做測試關聯 reply
      * 是否能看到一則 Topic 其中的一則 reply
+     * 有 Reply => 測試是否顯示
+     * 沒有 Reply => 測試 0
      * @test
      */
     public function a_user_can_read_replies_that_are_associated_with_a_topic()
     {
-        // 隨機取得一筆回復
-        $reply = $this->topic->replies()->orderByRaw("RAND()")->first();
-        $this->get($this->topic->link())->assertSee($reply->title);
+        $count = 0;
+        while ($count == 0) {
+            $topic = Topic::query()->inRandomOrder()->first();
+            $count = $topic->replies()->count();
+        }
+
+        if($count) {
+            // 隨機取得一筆回復
+            $reply = $topic->replies()->orderByRaw("RAND()")->first();
+            $this->get($topic->link())->assertSee($reply->title);
+        } else {
+            $this->assertSame(0, $count);
+        }
     }
 }
