@@ -45,6 +45,20 @@ class ParticipateInForumTest extends TestCase
     }
 
     /**
+     * 測試建立 content 為 null 的回復
+     * @test
+     */
+    public function a_replies_require_content()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $reply = factory(Reply::class)->make(['content' =>null]);
+
+        $this->post(route('replies.store'), $reply->toArray())
+            ->assertSessionHasErrors('content');
+    }
+
+    /**
      * 未登入情況回復 Topic (預期拋出 AuthenticationException 錯誤）
      * @test
      */
