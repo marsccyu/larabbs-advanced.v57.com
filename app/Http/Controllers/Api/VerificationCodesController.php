@@ -10,7 +10,19 @@ class VerificationCodesController extends Controller
 {
     public function store(VerificationCodeRequest $request)
     {
-        $phone = $request->phone;
+        $captchaData = Cache::get($request->captcha_key);
+
+        if (!$captchaData) {
+            return $this->response->error('圖片驗證碼已失效', 422);
+        }
+
+        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
+            // 验证错误就清除缓存
+            Cache::forget($request->captcha_key);
+            return $this->response->errorUnauthorized('圖片驗證碼錯誤');
+        }
+
+        $phone = $captchaData['phone'];
 
         // 生成4位随机数，左侧补0
         $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
