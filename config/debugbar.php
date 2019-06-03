@@ -9,14 +9,15 @@ return [
      |
      | Debugbar is enabled by default, when debug is set to true in app.php.
      | You can override the value by setting enable to true or false instead of null.
-     | 
+     |
      | You can provide an array of URI's that must be ignored (eg. 'api/*')
      |
      */
 
-    'enabled' => env('APP_DEBUG', false),
+//    'enabled' => env('APP_DEBUG', false),
+    'enabled' => env('DEBUGBAR_ENABLE', false), // API 測試時設為關閉避免 PostMan 回傳 laravel-debugbar
     'except' => [
-        'telescope*'
+        'telescope*',
     ],
 
     /*
@@ -79,7 +80,7 @@ return [
      |
      */
     'error_handler' => false,
-    
+
     /*
      |--------------------------------------------------------------------------
      | Clockwork integration
