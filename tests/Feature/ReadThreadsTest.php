@@ -2,9 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Models\Thread;
-use App\Models\Topic;
 use Tests\TestCase;
+use App\Models\Topic;
+use App\Models\Thread;
+use App\Models\Channel;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,11 +16,13 @@ class ReadThreadsTest extends TestCase
 
     protected $thread;
     protected $topic; // 用 Topic 關聯 reply 做測試
+    protected $channel; // 用 Topic 關聯 reply 做測試
     public function setUp()
     {
         parent::setUp();
         $this->thread = Thread::inRandomOrder()->first();
         $this->topic = Topic::query()->limit(1)->recent()->first();
+        $this->channel = Channel::query()->where('id', 21)->first();
     }
 
     /**
@@ -81,4 +84,5 @@ class ReadThreadsTest extends TestCase
             $this->assertSame(0, $count);
         }
     }
+
 }
