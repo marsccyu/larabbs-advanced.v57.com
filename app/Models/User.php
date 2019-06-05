@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $this->hasMany(Reply::class);
     }
 
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
+    }
+
     public function notify($instance)
     {
         // 如果要通知的人是当前用户，就不必通知了！
