@@ -8,12 +8,10 @@ use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
 {
-    public function index($channelSlug = null)
+    public function index(Channel $channel)
     {
-        if($channelSlug){
-            $channelId = Channel::where('slug',$channelSlug)->first()->id;
-            $threads = Thread::where('channel_id',$channelId)->latest()->first();
-            dd($threads->id);
+        if($channel->exists){
+            $threads = $channel->threads()->latest()->get();
         }else{
             $threads = Thread::latest()->get();
         }
@@ -21,7 +19,7 @@ class ThreadsController extends Controller
         return view('threads.index',compact('threads'));
     }
 
-    public function show(Thread $thread)
+    public function show(Channel $channel, Thread $thread)
     {
         return view('threads.show',compact('thread'));
     }

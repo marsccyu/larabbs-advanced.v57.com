@@ -36,5 +36,6 @@ Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]
 
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 
-Route::get('/threads', 'ThreadsController@index')->name('thread.index');
-Route::get('/threads/{thread}', 'ThreadsController@show')->name('thread.show');
+Route::get('threads','ThreadsController@index');
+Route::get('threads/{channel}','ThreadsController@index');
+Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('thread.show');

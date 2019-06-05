@@ -16,6 +16,16 @@
                 <li class="nav-item {{ category_nav_active(2) }}"><a class="nav-link" href="{{ route('categories.show', 2) }}">教學</a></li>
                 <li class="nav-item {{ category_nav_active(3) }}"><a class="nav-link" href="{{ route('categories.show', 3) }}">問題</a></li>
                 <li class="nav-item {{ category_nav_active(4) }}"><a class="nav-link" href="{{ route('categories.show', 4) }}">公告</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-hidden="true"
+                       aria-expanded="false">Channels <span class="caret"></span> </a>
+
+                    <ul class="dropdown-menu">
+                        @foreach(\App\Models\Channel::all() as $channel)
+                            <li class="nav-item"><a class="nav-link" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a> </li>
+                        @endforeach
+                    </ul>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

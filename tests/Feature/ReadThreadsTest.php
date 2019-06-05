@@ -16,13 +16,13 @@ class ReadThreadsTest extends TestCase
 
     protected $thread;
     protected $topic; // 用 Topic 關聯 reply 做測試
-    protected $channel; // 用 Topic 關聯 reply 做測試
+    protected $channel;
     public function setUp()
     {
         parent::setUp();
         $this->thread = Thread::inRandomOrder()->first();
         $this->topic = Topic::query()->limit(1)->recent()->first();
-        $this->channel = Channel::query()->where('id', 21)->first();
+        $this->channel = Channel::query()->where('id', $this->thread->channel_id)->first();
     }
 
     /**
@@ -40,7 +40,8 @@ class ReadThreadsTest extends TestCase
      */
     public function a_user_can_read_a_single_thread()
     {
-        $this->get($this->thread->path())->assertSee($this->thread->title);
+        $channel = Channel::where('id', $this->thread->channel_id)->first();
+        $this->get(route('thread.show', [$channel->slug, $this->thread->id]))->assertSee($this->thread->title);
     }
 
     /**
@@ -85,4 +86,15 @@ class ReadThreadsTest extends TestCase
         }
     }
 
+    /** @test */
+    public function a_user_can_filter_threads_according_to_a_channel()
+    {
+        $channel = $this->channel;
+        $threadInChannel = $this->thread;
+        $threadNotInChannel = Thread::where('channel_id', '!=', $channel->id)->first();
+
+        $this->get('/threads/' . $channel->slug)
+            ->assertSee($threadInChannel->title)
+            ->assertDontSee($threadNotInChannel->title);
+    }
 }
