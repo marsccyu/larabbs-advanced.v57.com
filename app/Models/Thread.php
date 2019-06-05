@@ -12,4 +12,9 @@ class Thread extends Model
     {
         return '/threads/'.$this->id;
     }
+
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
 }

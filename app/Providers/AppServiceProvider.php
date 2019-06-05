@@ -32,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
         Carbon::setLocale('zh-TW');
+
+        \View::share('channels',\App\Models\Channel::all());
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Topic;
 use App\Models\Thread;
 use App\Models\Channel;
@@ -86,7 +87,10 @@ class ReadThreadsTest extends TestCase
         }
     }
 
-    /** @test */
+    /**
+     * 是否能讀取到指定 channel 的 thread 內容
+     * @test
+     */
     public function a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = $this->channel;
@@ -96,5 +100,19 @@ class ReadThreadsTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_any_username()
+    {
+        $user = User::where('id', $this->thread->user_id)->first();
+        $this->signIn($user);
+
+        $threadByName = Thread::where('user_id', $user->id)->first();
+        $threadNotByName = Thread::where('user_id', '!=', $user->id)->first();
+
+        $this->get('threads?by='.$user->name)
+            ->assertSee($threadByName->title)
+            ->assertDontSee($threadNotByName->title);
     }
 }
