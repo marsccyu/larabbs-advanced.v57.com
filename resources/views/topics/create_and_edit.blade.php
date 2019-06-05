@@ -46,6 +46,17 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <select class="form-control" name="category_id" required>
+                                            <option value="" hidden disabled {{ $topic->id ? '' : 'selected' }}>請選擇 Channel</option>
+                                            @foreach ($channels as $channel)
+                                                <option value="{{ $channel->id }}" {{ $topic->channel_id == $channel->id ? 'selected' : '' }}>
+                                                    {{ $channel->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
                                         <textarea name="body" class="form-control" id="editor" rows="6"
                                                   placeholder="至少填寫3個字元。"
                                                   required>{{ old('body', $topic->body ) }}</textarea>
