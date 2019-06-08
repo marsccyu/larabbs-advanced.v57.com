@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
@@ -12,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Traits\ActiveUserHelper;
 use App\Models\Traits\LastActivedAtHelper;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements MustVerifyEmailContract
 {
     use HasRoles;
     use MustVerifyEmailTrait;
@@ -24,8 +23,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     protected $fillable = [
-        'name', 'email', 'password', 'introduction' ,'avatar', 'phone',
-        'weixin_openid', 'weixin_unionid'
+        'name', 'email', 'password', 'introduction' ,'avatar'
     ];
 
     protected $hidden = [
@@ -44,6 +42,11 @@ class User extends Authenticatable implements JWTSubject
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
     }
 
     public function notify($instance)
@@ -71,17 +74,5 @@ class User extends Authenticatable implements JWTSubject
         $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications->markAsRead();
-    }
-
-    // Rest omitted for brevity
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 }

@@ -8,6 +8,7 @@ $factory->define(App\Models\Reply::class, function (Faker $faker) {
 
     return [
         'content' => $faker->sentence(),
+        'body' => $faker->sentence(),
         'created_at' => $time,
         'updated_at' => $time,
     ];

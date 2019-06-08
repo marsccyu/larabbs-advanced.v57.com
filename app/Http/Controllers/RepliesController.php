@@ -20,6 +20,7 @@ class RepliesController extends Controller
         $reply->user_id = Auth::id();
         $reply->content = $request->input('content');
         $reply->topic_id = $request->input('topic_id');
+        $reply->body = 'Body'; // PHPunit Test 用到的填充數據
         $reply->save();
 
         return redirect()->to($reply->topic->link())->with('success', '評論送出成功！');

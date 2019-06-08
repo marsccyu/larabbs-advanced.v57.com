@@ -15,13 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \API::error(function  (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException  $exception)  {
-            throw  new  \Symfony\Component\HttpKernel\Exception\HttpException(404,  '404 Not Found');
-        });
-
-        \API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
-            abort(403, $exception->getMessage());
-        });
+        //
     }
 
     /**
@@ -38,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         Schema::defaultStringLength(191);
         Carbon::setLocale('zh-TW');
+
+        \View::share('channels',\App\Models\Channel::all());
     }
 }

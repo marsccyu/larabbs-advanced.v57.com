@@ -1,6 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
+use App\Models\Channel;
 
 $factory->define(App\Models\Topic::class, function (Faker $faker) {
 
@@ -13,9 +15,13 @@ $factory->define(App\Models\Topic::class, function (Faker $faker) {
     $created_at = $faker->dateTimeThisMonth($updated_at);
 
     return [
+        'channel_id' => function() {
+            return factory(Channel::class)->create()->id;
+        },
         'title' => $sentence,
         'body' => $faker->text(),
         'excerpt' => $sentence,
+        'slug' => Str::random(),
         'created_at' => $created_at,
         'updated_at' => $updated_at,
     ];

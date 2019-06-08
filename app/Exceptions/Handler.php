@@ -46,6 +46,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /**
+         * 簡化錯誤報告的內容，方便定位至錯誤位置
+         * runningInConsole => 用指令執行 phpunit 時拋出錯誤使測試斷言接收 exception
+         * 補充 : 在 tests/TestCase.php 中改寫了拋出異常的方式，故此處不會有影響。
+         */
+        // if(app()->environment() === 'local' && app()->runningInConsole()) throw $exception;
+
         return parent::render($request, $exception);
     }
 }

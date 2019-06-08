@@ -5,7 +5,7 @@ namespace App\Models;
 class Topic extends Model
 {
     protected $fillable = [
-        'title', 'body', 'category_id', 'excerpt', 'slug'
+        'channel_id', 'title', 'body', 'category_id', 'excerpt', 'slug'
     ];
 
     public function category()
@@ -21,6 +21,11 @@ class Topic extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
     }
 
     public function scopeWithOrder($query, $order)
