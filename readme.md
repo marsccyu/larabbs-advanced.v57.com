@@ -6,4 +6,4 @@
 ##### [socialiteproviders](https://socialiteproviders.netlify.com/) : 提供各種完整的第三方登錄方式，依照需求的第三方登錄方式安裝相對應的套件
 ##### [jwt-auth](https://github.com/tymondesigns/jwt-auth) : Laravel 的 jwt 組件
 
-
+api-v2
