@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Carbon::setLocale('zh-TW');
 
+        # 由於是 boot 時分享數據給 view，故在執行指令時須注意造成錯誤
         \View::share('channels',\App\Models\Channel::all());
     }
 }
