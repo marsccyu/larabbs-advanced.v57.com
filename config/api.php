@@ -16,6 +16,9 @@ return [
     | to you can register your type with the IANA. For more details:
     | https://tools.ietf.org/html/rfc6838
     |
+    | x : 本地開發的或私有環境的
+    | prs : 未對外發布的，提供給公司 app，單頁應用，桌面應用等
+    | vnd : 對外發布的，開放給所有用戶
     */
 
     'standardsTree' => env('API_STANDARDS_TREE', 'x'),
