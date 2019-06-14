@@ -17,14 +17,21 @@
                 <li class="nav-item {{ category_nav_active(3) }}"><a class="nav-link" href="{{ route('categories.show', 3) }}">問題</a></li>
                 <li class="nav-item {{ category_nav_active(4) }}"><a class="nav-link" href="{{ route('categories.show', 4) }}">公告</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-hidden="true"
-                       aria-expanded="false">Channels <span class="caret"></span> </a>
-
-                    <ul class="dropdown-menu">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Channels
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="javascript:void(0);">
+                            TDD 測試章節用，請忽略
+                        </a>
+                        <div class="dropdown-divider"></div>
                         @foreach($channels as $channel)
-                            <li class="nav-item"><a class="nav-link" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a> </li>
+                            <a class="dropdown-item" href="/threads/{{ $channel->slug }}">
+                                <i class="far fa-user mr-2"></i>
+                                {{ $channel->name }}
+                            </a>
                         @endforeach
-                    </ul>
+                    </div>
                 </li>
             </ul>
 
