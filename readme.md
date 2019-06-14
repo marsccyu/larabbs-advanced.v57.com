@@ -1,9 +1,9 @@
-v57
+### v57-API
 
-Merge branch : TDD-test
+##### [dingo/api](https://github.com/dingo/api/) : Laravel 搭建 RestFul Api 的工具
+##### [doctrine/dbal](https://github.com/doctrine/dbal) : 修改資料表屬性
+##### [gregwar/captcha](https://github.com/Gregwar/Captcha) : 不依賴 session 的圖片驗證碼
+##### [socialiteproviders](https://socialiteproviders.netlify.com/) : 提供各種完整的第三方登錄方式，依照需求的第三方登錄方式安裝相對應的套件
+##### [jwt-auth](https://github.com/tymondesigns/jwt-auth) : Laravel 的 jwt 組件
 
-進度 [TDD-22](https://learnku.com/docs/forum-in-laravel-tdd/22-user-personal-center/1654)
- 
-> GraphQL
 
-> Vue.js 
