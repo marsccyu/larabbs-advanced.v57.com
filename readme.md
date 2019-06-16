@@ -12,5 +12,3 @@ test
 test v2
 
 Edit by bcawosxy
-
-測試一下...
