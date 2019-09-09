@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Topic extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'channel_id', 'title', 'body', 'category_id', 'excerpt', 'slug'
     ];
